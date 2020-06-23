@@ -4,13 +4,14 @@ import { Container } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import NoMatch from './components/NoMatch'
-import Products from './components/Products';
 import Home from './components/Home';
-import ProductView from './components/ProductView'
+import UserView from './components/UserView'
 import Login from './components/Login';
 import Register from './components/Register';
 import FetchUser from './components/FetchUser'
 import ProtectedRoute from './components/ProtectedRoute';
+import Users from './components/Users';
+import Profile from './components/Profile';
 
 
 function App() {
@@ -23,8 +24,9 @@ function App() {
        <ProtectedRoute exact path='/' component={Home}/>
        <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-       <ProtectedRoute exact path='/products' component={Products}/>
-       <ProtectedRoute exact path='/products/:id' component={ProductView}/>     
+       <ProtectedRoute exact path='/users' component={Users}/>
+       <ProtectedRoute exact path='/users/:id' component={UserView}/> 
+       <ProtectedRoute exact path='/profile' component={Profile}/>     
        <Route component={NoMatch}></Route>
      </Switch>
    </Container>

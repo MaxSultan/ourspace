@@ -26,7 +26,7 @@ class ProductsForm extends React.Component {
     const { name, price, description, department, } = this.state;
     return (
       <div>
-        <Header as="h1">New Product</Header>
+        <Header as="h1">Edit your Profile</Header>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group widths="equal">
             <Form.Input

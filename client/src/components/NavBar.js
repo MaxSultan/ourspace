@@ -52,10 +52,16 @@ const NavBar = ({ props }) => {
                 active={location.pathname === '/'}
                 />
             </Link>
-            <Link to='/products'>
+            <Link to='/users'>
                 <Menu.Item
-                name="Products"
-                active={location.pathname === '/products'}
+                name="Users"
+                active={location.pathname === '/users'}
+                />
+            </Link>
+            <Link to='/profile'>
+                <Menu.Item
+                name="Profile"
+                active={location.pathname === '/profile'}
                 />
             </Link>
             {rightNavItems()}
