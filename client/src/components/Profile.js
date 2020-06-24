@@ -7,16 +7,6 @@ import EditUser from './EditUser'
 export default function Profile() {
     const {user} = useContext(AuthContext) 
     const [showForm, setShowForm] = useState(false)
-    
-    // async function getuser(){
-    //     const res = await Axios.get('/profile')
-    //     console.log(res)
-    // }
-
-    // useEffect(() => {
-    //   getuser()
-    // },[])
-
 
     return (
         <div>
@@ -25,7 +15,7 @@ export default function Profile() {
             <p>{user.email}</p>
             <Image>{user.image}</Image>
             {console.log(user)}
-            <Button onClick={() => setShowForm(!showForm)}>Toggle Form</Button>
+            <Button onClick={() => setShowForm(!showForm)}>{showForm ? 'Cancel Edit' : 'Edit Profile'}</Button>
             {showForm && <EditUser />}
         </div>
     )

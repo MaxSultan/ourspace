@@ -28,6 +28,7 @@ export default class AuthProvider extends Component {
           })
           .catch( res => {
             console.log(res);
+            alert('login is incorrect')
           })
       }
       
@@ -47,7 +48,7 @@ export default class AuthProvider extends Component {
         return (
            <AuthContext.Provider 
            value={{
-             user: this.state.user,
+            user: this.state.user,
             authenticated: this.state.user !== null,
             handleRegister: this.handleRegister,
             handleLogin: this.handleLogin,

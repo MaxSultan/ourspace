@@ -5,5 +5,13 @@ Rails.application.routes.draw do
     resources :products
   end 
 
+  namespace :api do
+    resources :users do 
+      resources :posts
+    end 
+  end 
+
+  get '/api/get_all_posts', to: 'api/posts#all'
   get '/profile', to: 'products#profile'
+ 
 end

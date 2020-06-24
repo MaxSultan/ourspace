@@ -12,6 +12,7 @@ import FetchUser from './components/FetchUser'
 import ProtectedRoute from './components/ProtectedRoute';
 import Users from './components/Users';
 import Profile from './components/Profile';
+import AllPosts from './components/AllPosts';
 
 
 function App() {
@@ -19,17 +20,18 @@ function App() {
    <>
    <NavBar/>
    <FetchUser>
-   <Container>
-     <Switch>
-       <ProtectedRoute exact path='/' component={Home}/>
-       <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-       <ProtectedRoute exact path='/users' component={Users}/>
-       <ProtectedRoute exact path='/users/:id' component={UserView}/> 
-       <ProtectedRoute exact path='/profile' component={Profile}/>     
-       <Route component={NoMatch}></Route>
-     </Switch>
-   </Container>
+    <Container>
+        <Switch>
+          <ProtectedRoute exact path='/' component={Home}/>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <ProtectedRoute exact path='/users' component={Users}/>
+          <ProtectedRoute exact path='/users/:id' component={UserView}/> 
+          <ProtectedRoute exact path='/profile' component={Profile}/>  
+          <Route exact path="/posts" component={AllPosts} />   
+          <Route component={NoMatch}></Route>
+        </Switch>
+    </Container>
    </FetchUser>
    </>
   );

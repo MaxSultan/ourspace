@@ -1,17 +1,21 @@
 import React from 'react';
 import { Form, Header, } from "semantic-ui-react";
 import axios from 'axios';
+import { InputFile } from 'semantic-ui-react-input-file'
+import AuthProvider, { AuthConsumer } from '../providers/AuthProvider';
 
-class ProductsForm extends React.Component {
-  defaultValues = { name: "", price: "", description: "", department: "", };
+class EditUser extends React.Component {
+  
+  defaultValues = { name: "", image: "", nickname: "", };
   state = { ...this.defaultValues, };
+
   handleSubmit = (e) => {
+    const { authenticated, setUser, } = this.props.auth;
     e.preventDefault();
     const product = { ...this.state, };
-    // TODO: make api POST request
-    axios.post(`api/products`, {...this.state})
+    axios.post(`/api/auth/edit`, {...this.state})
     .then( res => {
-        this.props.add(res.data)
+        setUser(res.data)
     })
     .catch(err => console.log(err))
     this.setState({ ...this.defaultValues, });
@@ -22,8 +26,12 @@ class ProductsForm extends React.Component {
     this.setState({ [name]: value, });
   }
 
+  handleUpload = (e) => {
+    console.log(e)
+  }
+
   render() {
-    const { name, price, description, department, } = this.state;
+  
     return (
       <div>
         <Header as="h1">Edit your Profile</Header>
@@ -33,33 +41,36 @@ class ProductsForm extends React.Component {
               label="Name"
               name="name"
               placeholder="Name"
-              value={name}
+              value={this.state.name}
               onChange={this.handleChange}
               required
             />
             <Form.Input
-              label="Description"
-              name="description"
-              placeholder="Description"
-              value={description}
+              label="Nickname"
+              name="nickname"
+              placeholder="Nickname"
+              value={this.state.nickname}
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group widths="equal">
-            <Form.Input
-              label="Department"
-              name="department"
-              placeholder="Department"
-              value={department}
+            <Form.Group widths="equal">
+            {/* <Form.Input
+              label="Image"
+              name="image"
+              placeholder="Image"
+              value={this.state.image}
               onChange={this.handleChange}
-            />
-            <Form.Input
-              label="Price"
-              name="price"
-              placeholder="Price"
-              type="number"
-              value={price}
-              onChange={this.handleChange}
+            />  */}
+              <InputFile
+              label="Image"
+              name="image"
+              placeholder="Image"
+              value={this.state.image}
+              // button={{ ...buttonProps }}
+              input={{
+                id: 'input-control-id',
+                onChange: this.handleUpload
+              }}
             />
           </Form.Group>
           <Form.Button color="blue">Submit</Form.Button>
@@ -69,4 +80,13 @@ class ProductsForm extends React.Component {
   }
 }
 
-export default ProductsForm;
+
+export default class ConnectedEditUser extends React.Component {
+  render() {
+    return (
+      <AuthConsumer >
+        {auth => <EditUser {...this.props} auth={auth} setUser={auth.setUser}/>}
+      </AuthConsumer>
+    )
+  }
+}

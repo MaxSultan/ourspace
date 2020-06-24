@@ -1,35 +1,35 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { AuthContext } from '../providers/AuthProvider'
-import Axios from 'axios';
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
+import axios from "axios";
 
 export default function FetchUser(props) {
-    const [loaded, setLoaded] = useState(false);
-    const auth = useContext(AuthContext)
+  const [loaded, setLoaded] = useState(false);
+  const { authenticated, setUser } = useContext(AuthContext);
 
-    useEffect( () => {
-        if(auth.authenticated){
-            setLoaded(true)
-        }else{
-            if(checkLocalToken()){
-                Axios
-                .get('/api/auth/validate_token')
-                .then(res => {
-                    auth.setUser(res.data.data);
-                    setLoaded(true)
-                })
-                .catch(err => {
-                    setLoaded(true)
-                })
-            }else{
-                setLoaded(true)
-            }
+  
+
+  useEffect(() => {
+    async function checkUser() {
+        if (!authenticated) {
+          await checkLocalToken();
         }
-    },[])
-
-    const checkLocalToken = () => {
-        const token = localStorage.getItem('access-token')
-        return token
+        setLoaded(true);
     }
 
-    return loaded ? props.children : null
+    checkUser();
+    setLoaded(true)
+  },[]);
+
+  async function checkLocalToken() {
+    if (localStorage.getItem("access-token")) {
+      try {
+        const res = await axios.get("/api/auth/validate_token");
+        setUser(res.data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
+
+  return loaded ? props.children : null;
 }

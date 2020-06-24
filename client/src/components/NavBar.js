@@ -64,6 +64,12 @@ const NavBar = ({ props }) => {
                 active={location.pathname === '/profile'}
                 />
             </Link>
+            <Link to='/posts'>
+                <Menu.Item
+                name="All Posts"
+                active={location.pathname === '/posts'}
+                />
+            </Link>
             {rightNavItems()}
         </Menu>
     )
